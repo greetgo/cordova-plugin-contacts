@@ -239,6 +239,12 @@ public class ContactManager extends CordovaPlugin {
         if (requestCode == CONTACT_PICKER_RESULT) {
             if (resultCode == Activity.RESULT_OK) {
                 String contactId = intent.getData().getLastPathSegment();
+
+                if (!contactId.matches("[0-9]+")){
+                    callbackContext.error(OPERATION_CANCELLED_ERROR);
+                    return;
+                }
+
                 // to populate contact data we require  Raw Contact ID
                 // so we do look up for contact raw id first
                 Cursor c =  this.cordova.getActivity().getContentResolver().query(RawContacts.CONTENT_URI,

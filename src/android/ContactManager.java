@@ -35,6 +35,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.RawContacts;
 
@@ -221,6 +222,7 @@ public class ContactManager extends CordovaPlugin {
         Runnable worker = new Runnable() {
             public void run() {
                 Intent contactPickerIntent = new Intent(Intent.ACTION_PICK, Contacts.CONTENT_URI);
+                contactPickerIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
                 plugin.cordova.startActivityForResult(plugin, contactPickerIntent, CONTACT_PICKER_RESULT);
             }
         };
@@ -239,6 +241,12 @@ public class ContactManager extends CordovaPlugin {
         if (requestCode == CONTACT_PICKER_RESULT) {
             if (resultCode == Activity.RESULT_OK) {
                 String contactId = intent.getData().getLastPathSegment();
+
+                if (!contactId.matches("[0-9]+"){
+                    callbackContext.error(OPERATION_CANCELLED_ERROR);
+                    return;
+                }
+
                 // to populate contact data we require  Raw Contact ID
                 // so we do look up for contact raw id first
                 Cursor c =  this.cordova.getActivity().getContentResolver().query(RawContacts.CONTENT_URI,

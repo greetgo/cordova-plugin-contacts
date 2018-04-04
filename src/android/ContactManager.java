@@ -242,7 +242,7 @@ public class ContactManager extends CordovaPlugin {
             if (resultCode == Activity.RESULT_OK) {
                 String contactId = intent.getData().getLastPathSegment();
 
-                if (!contactId.matches("[0-9]+"){
+                if (!contactId.matches("[0-9]+")){
                     callbackContext.error(OPERATION_CANCELLED_ERROR);
                     return;
                 }

@@ -221,7 +221,7 @@ public class ContactManager extends CordovaPlugin {
         final CordovaPlugin plugin = (CordovaPlugin) this;
         Runnable worker = new Runnable() {
             public void run() {
-                Intent contactPickerIntent = new Intent(Intent.ACTION_PICK, Contacts.CONTENT_FILTER_URI, "");
+                Intent contactPickerIntent = new Intent(Intent.ACTION_PICK, Contacts.CONTENT_FILTER_URI);
                 plugin.cordova.startActivityForResult(plugin, contactPickerIntent, CONTACT_PICKER_RESULT);
             }
         };

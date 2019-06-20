@@ -34,7 +34,6 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.List;
 import java.lang.IllegalArgumentException;
 
 import org.apache.cordova.CordovaInterface;
@@ -189,13 +188,9 @@ public class ContactAccessorSdk5 extends ContactAccessor {
 
     // Loop through the fields the user provided to see what data should be returned.
     HashMap<String, Boolean> populate = buildPopulationSet(options);
-    LOG.e("search:populate", populate.toString());
 
     // Build the ugly where clause and where arguments for one big query.
     WhereOptions whereOptions = buildWhereClause(fields, searchTerm, hasPhoneNumber);
-
-    LOG.e("search:ContactsContract.Data.CONTENT_URI", ContactsContract.Data.CONTENT_URI.toString());
-    LOG.e("search:ContactsContract.CommonDataKinds.Phone.CONTENT_URI", ContactsContract.CommonDataKinds.Phone.CONTENT_URI.toString());
 
     // Get all the id's where the search term matches the fields passed in.
     Cursor idCursor = mApp.getActivity().getContentResolver().query(ContactsContract.Data.CONTENT_URI,
@@ -214,8 +209,6 @@ public class ContactAccessorSdk5 extends ContactAccessor {
       contactIds.add(idCursor.getString(idColumn));
     }
     idCursor.close();
-
-    LOG.e("search:contactIds", contactIds.toString());
 
     // Build a query that only looks at ids
     WhereOptions idOptions = buildIdClause(contactIds, searchTerm, hasPhoneNumber);
@@ -300,13 +293,6 @@ public class ContactAccessorSdk5 extends ContactAccessor {
       ContactsContract.Data.CONTACT_ID + " ASC");
 
     JSONArray contacts = populateContactArray(limit, populate, c);
-
-    List<String> list = new ArrayList<String>();
-    for(int i = 0; i < contacts.length(); i++){
-      list.add(contacts.optString(i));
-    }
-
-    LOG.e("search:contacts", list.toString());
 
     if (!c.isClosed()) {
       c.close();

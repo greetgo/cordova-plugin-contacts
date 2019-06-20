@@ -303,7 +303,7 @@ public class ContactAccessorSdk5 extends ContactAccessor {
 
     List<String> list = new ArrayList<String>();
     for(int i = 0; i < contacts.length(); i++){
-      list.add(contacts.getJSONObject(i).toString());
+      list.add(contacts.optString(i));
     }
 
     LOG.e("search:contacts", list.toString());

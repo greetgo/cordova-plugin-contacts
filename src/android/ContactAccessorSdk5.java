@@ -34,6 +34,7 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.List;
 import java.lang.IllegalArgumentException;
 
 import org.apache.cordova.CordovaInterface;

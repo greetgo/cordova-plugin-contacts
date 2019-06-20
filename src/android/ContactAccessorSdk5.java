@@ -202,7 +202,7 @@ public class ContactAccessorSdk5 extends ContactAccessor {
         // Create a set of unique ids
         Set<String> contactIds = new HashSet<String>();
         int idColumn = -1;
-        while (idCursor.moveToNext()) {
+        while (idCursor.moveToNext()!=null && idCursor.moveToNext()) {
             if (idColumn < 0) {
                 idColumn = idCursor.getColumnIndex(ContactsContract.Data.CONTACT_ID);
             }
@@ -366,6 +366,7 @@ public class ContactAccessorSdk5 extends ContactAccessor {
         JSONArray websites = new JSONArray();
         JSONArray photos = new JSONArray();
 
+
         // Column indices
         int colContactId = c.getColumnIndex(ContactsContract.Data.CONTACT_ID);
         int colRawContactId = c.getColumnIndex(ContactsContract.Data.RAW_CONTACT_ID);
@@ -376,7 +377,7 @@ public class ContactAccessorSdk5 extends ContactAccessor {
         int colEventType = c.getColumnIndex(CommonDataKinds.Event.TYPE);
 
         if (c.getCount() > 0) {
-            while (c.moveToNext() && (contacts.length() <= (limit - 1))) {
+            while (c.moveToNext()!=null && c.moveToNext() && (contacts.length() <= (limit - 1))) {
                 try {
                     contactId = c.getString(colContactId);
                     rawId = c.getString(colRawContactId);
